@@ -1,0 +1,16 @@
+.progressBarWrapper {
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: var(--checkout-max-width);
+    background: var(--breadcrumbs-background);
+    min-height: var(--breadcrumbs-height);
+    margin-bottom: 100px;
+
+}
+
+.active {
+    font-size: 18px;
+    color: red;
+}
