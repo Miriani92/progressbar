@@ -22,7 +22,7 @@ class Checkout extends SourceCheckout {
         } else if (annulateHeader) {
             className = "lastheader"
         } else {
-            className = "header"
+            className = "header active"
         }
         return className
 
