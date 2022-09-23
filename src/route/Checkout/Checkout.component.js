@@ -7,11 +7,6 @@ import "./Checkout.extension.style"
 class Checkout extends SourceCheckout {
 
 
-    state = {
-        [this.props.checkoutStep]: this.props.checkoutStep
-    }
-
-
     createStepHeadersArr(stepMap) {
         let headersArray = []
         for (const key in stepMap) {
