@@ -1,9 +1,15 @@
 import { Checkout as SourceCheckout } from "SourceRoute/Checkout/Checkout.component"
 import ContentWrapper from 'SourceComponent/ContentWrapper/ContentWrapper.component';
+import checkIcon from "../../assets/check.svg"
 import "./Checkout.extension.style"
 
 
 class Checkout extends SourceCheckout {
+
+
+    state = {
+        [this.props.checkoutStep]: this.props.checkoutStep
+    }
 
 
     createStepHeadersArr(stepMap) {
@@ -15,38 +21,54 @@ class Checkout extends SourceCheckout {
         return headersArray
 
     }
-    headerClass(activStepTitle, header, annulateHeader) {
-        let className
-        if (activStepTitle === header) {
-            className = `header active`
-        } else if (annulateHeader) {
-            className = "lastheader"
-        } else {
-            className = "header active"
-        }
-        return className
+    headerClass(activStepTitle, stepHeaders, index) {
 
+        let matchIndex = stepHeaders.findIndex((item) => item === activStepTitle)
+        console.log(matchIndex, index)
+        let isActive = false
+        let isCheckIcon = false
+        if (matchIndex !== -1 && matchIndex === index || matchIndex > index) {
+            isActive = true
+        }
+        if (matchIndex !== -1 && matchIndex > index) {
+            isCheckIcon = true
+        }
+        return { isActive, isCheckIcon }
     }
+
+
 
     renderTitle() {
         const { checkoutStep } = this.props;
 
         const { title = '' } = this.stepMap[checkoutStep]
-        const activStepTitle = title.value.replace("step", "")
 
+        const activStepTitle = title.value.replace("step", "")
         const stepHeaders = this.createStepHeadersArr(this.stepMap)
 
         return (
-            <div className="progressBarWrapper">
-                {stepHeaders.map((header, index) => {
-                    let stepNumber = index + 1
-                    let annulateHeader = stepNumber === stepHeaders.length
-                    const className = this.headerClass(activStepTitle, header, annulateHeader)
+            <div className="porgressBarWrapper">
+                <div className="porgressBar">
+                    {stepHeaders.map((header, index) => {
+                        let stepNumber = index + 1
+                        const isLastHeader = stepHeaders.length === stepNumber
+                        const { isActive, isCheckIcon } = this.headerClass(activStepTitle, stepHeaders, index)
 
-                    return (
-                        <div key={index} className={className} data-stepNumber={stepNumber}>{annulateHeader ? "" : header}</div>
-                    )
-                })}
+                        return (
+
+                            <div key={index} className={isActive ? `list active` : "list"} data-stepNumber={stepNumber}>
+
+
+                                <div className={isLastHeader ? "noStepInfo" : "stepInfo"}>
+                                    <span className={isActive ? `header activeHeader` : "header"}> {header}</span>
+                                    <span className={isActive ? `stepNumber activeStepNumber` : "stepNumber"}>
+                                        {isCheckIcon ? <img src={checkIcon} className="svgstyle"></img> : stepNumber}
+                                    </span>
+                                </div>
+                            </div>
+                        )
+                    })}
+                </div>
             </div>
         );
 
