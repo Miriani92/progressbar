@@ -17,9 +17,7 @@ class Checkout extends SourceCheckout {
 
     }
     headerClass(activStepTitle, stepHeaders, index) {
-
         let matchIndex = stepHeaders.findIndex((item) => item === activStepTitle)
-        console.log(matchIndex, index)
         let isActive = false
         let isCheckIcon = false
         if (matchIndex !== -1 && matchIndex === index || matchIndex > index) {
@@ -30,7 +28,6 @@ class Checkout extends SourceCheckout {
         }
         return { isActive, isCheckIcon }
     }
-
 
 
     renderTitle() {
